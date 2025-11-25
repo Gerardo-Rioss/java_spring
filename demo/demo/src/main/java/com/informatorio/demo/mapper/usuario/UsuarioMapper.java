@@ -1,6 +1,7 @@
 package com.informatorio.demo.mapper.usuario;
 
 import com.informatorio.demo.dto.usuario.UsuarioDto;
+import com.informatorio.demo.mapper.perfil.PerfilMapper;
 import com.informatorio.demo.model.Usuario;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public final class UsuarioMapper {
         UsuarioDto usuarioDto= new UsuarioDto();
         usuarioDto.setId(usuario.getId());
         usuarioDto.setNombre(usuario.getNombre());
-        usuarioDto.setEmail(usuarioDto.getEmail());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setPerfilUsuarioDto(PerfilMapper.toDto(usuario.getPerfil()));
         return usuarioDto;
     }
 
