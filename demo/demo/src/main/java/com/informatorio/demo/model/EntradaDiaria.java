@@ -10,12 +10,15 @@ public class EntradaDiaria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate fecha;
     private String reflexion;
     private String emocion;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
     @ManyToMany
     @JoinTable(
             name = "entrada_habito",
@@ -23,6 +26,7 @@ public class EntradaDiaria {
             inverseJoinColumns =@JoinColumn(name="habito_id")
 
     )
+
     private List<Habito> habitos;
 
 
