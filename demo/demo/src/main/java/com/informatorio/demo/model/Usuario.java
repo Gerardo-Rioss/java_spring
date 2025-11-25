@@ -8,15 +8,20 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 public class Usuario {
+
     @Id
     @GeneratedValue
     private UUID id;
+
     @Column(name = "name",nullable = false,length = 50)
     private String nombre;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @OneToOne(cascade = CascadeType.ALL)
     private PerfilUsuario perfil;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EntradaDiaria> entradasDiarias;
 
