@@ -1,5 +1,6 @@
 package com.informatorio.demo.mapper.usuario;
 
+import com.informatorio.demo.dto.usuario.UsuarioCreateDto;
 import com.informatorio.demo.dto.usuario.UsuarioDto;
 import com.informatorio.demo.mapper.perfil.PerfilMapper;
 import com.informatorio.demo.model.Usuario;
@@ -23,5 +24,15 @@ public final class UsuarioMapper {
         return usuarios.stream()
                 .map(usuario -> toDto(usuario))
                 .toList();
+    }
+
+    public static Usuario toEntity(UsuarioCreateDto usuarioCreateDto){
+        if(usuarioCreateDto==null)return null;
+        Usuario usuario= new Usuario();
+        usuario.setEmail(usuarioCreateDto.getEmail());
+        usuario.setNombre(usuarioCreateDto.getNombre());
+        usuario.setPerfil(PerfilMapper.toEntity(usuarioCreateDto.getPerfilUsuarioDto()));
+        usuario.setEntradasDiarias(List.of());
+        return usuario;
     }
 }

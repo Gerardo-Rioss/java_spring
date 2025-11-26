@@ -14,4 +14,12 @@ public final class PerfilMapper {
         perfilUsuarioDto.setFraseDelDia(perfilUsuario.getFraseDelDia());
         return perfilUsuarioDto;
     }
+    public static PerfilUsuario toEntity(PerfilUsuarioDto perfilUsuarioDto){
+        if(perfilUsuarioDto==null)return null;
+        PerfilUsuario perfilUsuario= new PerfilUsuario();
+        perfilUsuario.setBio(perfilUsuarioDto.getBio());
+        perfilUsuario.setColorFavorito(perfilUsuarioDto.getColorFavorito());
+        perfilUsuario.setFraseDelDia(perfilUsuarioDto.getFraseDelDia());
+        return  perfilUsuario;
+    }
 }
