@@ -1,10 +1,11 @@
-package com.informatorio.demo.service.usuario;
+package com.informatorio.demo.service.usuario.impl;
 
 import com.informatorio.demo.dto.usuario.UsuarioCreateDto;
 import com.informatorio.demo.dto.usuario.UsuarioDto;
 import com.informatorio.demo.mapper.usuario.UsuarioMapper;
 import com.informatorio.demo.model.Usuario;
 import com.informatorio.demo.repository.usuario.UsuarioRepository;
+import com.informatorio.demo.service.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UsuarioServiceImpl  implements UsuarioService{
+public class UsuarioServiceImpl  implements UsuarioService {
 
     private UsuarioRepository usuarioRepository;
 

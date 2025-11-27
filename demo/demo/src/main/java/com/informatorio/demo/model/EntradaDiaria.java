@@ -24,7 +24,6 @@ public class EntradaDiaria {
             name = "entrada_habito",
             joinColumns = @JoinColumn(name = "entrada_id"),
             inverseJoinColumns =@JoinColumn(name="habito_id")
-
     )
 
     private List<Habito> habitos;
