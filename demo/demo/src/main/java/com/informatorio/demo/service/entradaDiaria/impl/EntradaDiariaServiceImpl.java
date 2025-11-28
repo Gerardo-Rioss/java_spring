@@ -52,6 +52,7 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
         entradaDiaria.setReflexion(createDto.getReflexion());
         entradaDiaria.setEmocion(createDto.getEmocion());
         EntradaDiaria saved = entradaDiariaRepository.save(entradaDiaria);
+        log.info("Usuario generado exitosamente.");
         return EntradaDiariaMapper.toDto(saved);
 
     }
