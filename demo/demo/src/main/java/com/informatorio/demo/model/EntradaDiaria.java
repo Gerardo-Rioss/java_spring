@@ -11,8 +11,11 @@ public class EntradaDiaria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDate fecha;
+    @Column(nullable = false, length = 500)
     private String reflexion;
+    @Column(nullable = false, length = 100)
     private String emocion;
 
     @ManyToOne

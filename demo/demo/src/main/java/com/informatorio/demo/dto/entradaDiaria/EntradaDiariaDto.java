@@ -1,6 +1,7 @@
 package com.informatorio.demo.dto.entradaDiaria;
 
 import com.informatorio.demo.dto.usuario.UsuarioDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EntradaDiariaDto {
+    @NotNull
     private Long id;
     private LocalDate fecha;
     private String reflexion;
