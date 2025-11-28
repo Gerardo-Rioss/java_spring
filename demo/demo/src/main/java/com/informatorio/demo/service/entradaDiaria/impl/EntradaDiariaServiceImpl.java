@@ -11,6 +11,7 @@ import com.informatorio.demo.repository.habito.HabitoRepository;
 import com.informatorio.demo.repository.usuario.UsuarioRepository;
 import com.informatorio.demo.service.entradaDiaria.EntradaDiariaService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EntradaDiariaServiceImpl implements EntradaDiariaService {
 
     private final EntradaDiariaRepository entradaDiariaRepository;
@@ -27,9 +29,11 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
 
     @Override
     public EntradaDiariaDto create(EntradaDiariaCreateDto createDto) {
+        log.info("Creando entrada diaria.");
         UUID uuidUsuario= createDto.getUsuarioId();
         Optional<Usuario> usuario= usuarioRepository.findById(uuidUsuario);
         if (usuario.isEmpty()){
+            log.warn("Usuario no encontrado.");
             throw new IllegalArgumentException("Usuario no encontrado id: "+ uuidUsuario);
         }
         List<Habito> habitos = List.of();
@@ -37,7 +41,8 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
             //Guardar en habitos los habitos de la bd que se envian en la request
             habitos = habitoRepository.findAllById(createDto.getHabitosIds());
             if(habitos.size() != createDto.getHabitosIds().size()){
-                throw new IllegalArgumentException("Alguno de los habitos no se ha encontrado");
+                log.warn("Alguno de los habitos no se ha encontrado.");
+//                throw new IllegalArgumentException("Alguno de los habitos no se ha encontrado");
             }
         }
         EntradaDiaria entradaDiaria= new EntradaDiaria();
