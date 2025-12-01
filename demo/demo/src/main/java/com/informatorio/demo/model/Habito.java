@@ -15,6 +15,7 @@ public class Habito {
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private NivelDeImportanciaEnum nivelDeImportanciaEnum;
 
     @ManyToMany(mappedBy = "habitos")

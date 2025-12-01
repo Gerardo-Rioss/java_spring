@@ -8,6 +8,7 @@ import com.informatorio.demo.model.Habito;
 import com.informatorio.demo.repository.habito.HabitoRepository;
 import com.informatorio.demo.service.habito.HabitoService;
 import jakarta.validation.ValidationException;
+import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
@@ -15,6 +16,7 @@ import org.springframework.web.ErrorResponseException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class HabitoServiceImpl implements HabitoService {
     private HabitoRepository habitoRepository;
     @Override
