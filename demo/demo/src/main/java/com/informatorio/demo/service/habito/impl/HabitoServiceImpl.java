@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HabitoServiceImpl implements HabitoService {
-    private HabitoRepository habitoRepository;
+    private final HabitoRepository habitoRepository;
     @Override
     public HabitoDto crearHabito(HabitoCreateDto habitoCreateDto) {
         try{
