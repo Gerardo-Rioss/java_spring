@@ -9,34 +9,40 @@ import com.informatorio.demo.repository.habito.HabitoRepository;
 import com.informatorio.demo.service.habito.HabitoService;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class HabitoServiceImpl implements HabitoService {
     private final HabitoRepository habitoRepository;
     @Override
     public HabitoDto crearHabito(HabitoCreateDto habitoCreateDto) {
         try{
-            //controlar que la descripcion no este vacio
+
+            //controlar que la descripcion ingresada no este vacio
             if (habitoCreateDto.getDescripcion()==null || habitoCreateDto.getDescripcion().trim().isEmpty()){
+                log.warn("Descripcion vacia");
                 throw new ValidationException("la descripcion no puede estar vacia");
             }
-            //que exista
+
+            //controlo la existencia de uno igual
             boolean existe = habitoRepository.findAll().stream()
                     .anyMatch(habito -> habito.getDescripcion()
                             .equalsIgnoreCase(habitoCreateDto.getDescripcion()));
-
             if (existe){
-                throw new ValidationException("Ya existe un hábito con esa descripción: "+habitoCreateDto.getDescripcion());
+                log.warn("Existe un habito con la misma descripción.");
+                throw new ValidationException("Ya existe un hábito con esa descripción: "+ habitoCreateDto.getDescripcion());
             }
+
             Habito habito= HabitoMapper.toEntity(habitoCreateDto);
             habito = habitoRepository.save(habito);
+            log.info("Habito generado exitosamente.");
             return HabitoMapper.toDto(habito);
+
         } catch (Exception e) {
             throw new RuntimeException("Error: ",e);
         }
