@@ -1,7 +1,9 @@
 package com.informatorio.demo.controller;
 
+import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaDto;
 import com.informatorio.demo.dto.usuario.UsuarioCreateDto;
 import com.informatorio.demo.dto.usuario.UsuarioDto;
+import com.informatorio.demo.service.entradaDiaria.EntradaDiariaService;
 import com.informatorio.demo.service.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +25,7 @@ import java.util.UUID;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
+    private EntradaDiariaService entradaDiariaService;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
@@ -40,7 +44,7 @@ public class UsuarioController {
         return usuarios;
     };
 
-
+    // obtiene un usuario por su id
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDto>getUsuarioById( @PathVariable UUID id
     ){
@@ -51,6 +55,18 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     };
+
+    @GetMapping("/{usuarioId}/entradas-diarias")
+    public ResponseEntity<EntradaDiariaDto> obtenerEntradasDiarias(
+            @PathVariable UUID usuarioId,
+            @RequestParam(required = false)LocalDate desde,
+            @RequestParam(required = false) LocalDate hasta
+            ){
+        List<EntradaDiariaDto> entradas = entradaDiariaService.listarEntradasPorUsuario(usuarioId,desde,hasta);
+        return ResponseEntity.ok(entradas);
+    };
+
+
 
 
     @PostMapping
