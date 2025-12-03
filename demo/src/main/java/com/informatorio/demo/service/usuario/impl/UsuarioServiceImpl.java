@@ -30,19 +30,22 @@ public class UsuarioServiceImpl  implements UsuarioService {
     }
 
     @Override
-    public List<UsuarioDto> obtenerTodos(String nombre, String email) {
-        List<Usuario> usuarioList = List.of();
+    public List<UsuarioDto> obtenerTodos(String nombre, String email, String colorFavorito) {
         Specification<Usuario> spec = Specification.unrestricted();
 
-        if (nombre != null && email == null){
-            spec = spec.and(UsuarioSpecifications.nombre(nombre));
+        if(nombre != null && !nombre.isBlank()){
+            spec = spec.and(UsuarioSpecifications.nombre( nombre ));
         }
-        if (nombre == null && email != null) {
-            spec = spec.and(UsuarioSpecifications.email(email));
+        if(email != null && !email.isBlank()){
+            spec = spec.and(UsuarioSpecifications.email( email ));
+        }
+        if(colorFavorito != null && !colorFavorito.isBlank()){
+            spec = spec.and(UsuarioSpecifications.colorFavorito( colorFavorito ));
         }
 
-        usuarioList=usuarioRepository.findAll(spec);
-        return UsuarioMapper.toDtoList(usuarioList);
+        List<Usuario> usuarioList = usuarioRepository.findAll(spec);
+
+        return UsuarioMapper.toDtoList( usuarioList );
     }
 
     @Override

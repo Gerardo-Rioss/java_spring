@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UsuarioService {
-    List<UsuarioDto> obtenerTodos(String nombre, String email);
+    List<UsuarioDto> obtenerTodos(String nombre, String email, String colorFavorito);
     Optional<UsuarioDto> obtenerPorId(UUID id);
     UsuarioDto crearUsuario(UsuarioCreateDto usuarioCreateDto);
     UsuarioDto updateUsuario(UUID id, UsuarioCreateDto usuarioCreateDto);

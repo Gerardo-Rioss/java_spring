@@ -32,9 +32,10 @@ public class UsuarioController {
     @GetMapping
     public List<UsuarioDto>getUsuarios(
             @RequestParam(required = false) String nombre,
-            @RequestParam(required = false) String email
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String colorFavorito
     ){
-        List<UsuarioDto> usuarios = usuarioService.obtenerTodos(nombre,email);
+        List<UsuarioDto> usuarios = usuarioService.obtenerTodos(nombre,email, colorFavorito);
         return usuarios;
     };
 
