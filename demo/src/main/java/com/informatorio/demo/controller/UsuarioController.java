@@ -25,7 +25,6 @@ import java.util.UUID;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
-    private EntradaDiariaService entradaDiariaService;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
@@ -62,8 +61,8 @@ public class UsuarioController {
             @RequestParam(required = false)LocalDate desde,
             @RequestParam(required = false) LocalDate hasta
             ){
-        List<EntradaDiariaDto> entradas = entradaDiariaService.listarEntradasPorUsuario(usuarioId,desde,hasta);
-        return ResponseEntity.ok(entradas);
+        List<EntradaDiariaDto> entradas = usuarioService.listarEntradas(usuarioId,desde,hasta);
+        return entradas;
     };
 
 

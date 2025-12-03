@@ -1,6 +1,9 @@
 package com.informatorio.demo.repository.usuario.specification;
+import com.informatorio.demo.model.EntradaDiaria;
 import com.informatorio.demo.model.Usuario;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.UUID;
 
 public final class UsuarioSpecifications {
     private UsuarioSpecifications() {}
