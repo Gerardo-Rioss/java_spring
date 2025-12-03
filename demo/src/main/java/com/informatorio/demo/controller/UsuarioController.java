@@ -29,6 +29,7 @@ public class UsuarioController {
     }
     public UsuarioController() {}
 
+
     @GetMapping
     public List<UsuarioDto>getUsuarios(
             @RequestParam(required = false) String nombre,
@@ -38,6 +39,7 @@ public class UsuarioController {
         List<UsuarioDto> usuarios = usuarioService.obtenerTodos(nombre,email, colorFavorito);
         return usuarios;
     };
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDto>getUsuarioById( @PathVariable UUID id
@@ -50,6 +52,7 @@ public class UsuarioController {
         }
     };
 
+
     @PostMapping
     public ResponseEntity<UsuarioDto> createUsuario(
             @Valid @RequestBody UsuarioCreateDto usuarioCreateDto
@@ -59,6 +62,7 @@ public class UsuarioController {
                 .created(URI.create("/api/v1/usuarios"+ usuarioCreado.getId()))
                 .body(usuarioCreado);
     };
+
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDto> updateUsuario(
@@ -73,6 +77,7 @@ public class UsuarioController {
     ResponseEntity.ok(usuarioDto);
     return null;
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario (
