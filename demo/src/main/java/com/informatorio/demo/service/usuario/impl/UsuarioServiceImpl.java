@@ -7,9 +7,11 @@ import com.informatorio.demo.mapper.usuario.UsuarioMapper;
 import com.informatorio.demo.model.PerfilUsuario;
 import com.informatorio.demo.model.Usuario;
 import com.informatorio.demo.repository.usuario.UsuarioRepository;
+import com.informatorio.demo.repository.usuario.specification.UsuarioSpecifications;
 import com.informatorio.demo.service.usuario.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,15 +32,16 @@ public class UsuarioServiceImpl  implements UsuarioService {
     @Override
     public List<UsuarioDto> obtenerTodos(String nombre, String email) {
         List<Usuario> usuarioList = List.of();
+        Specification<Usuario> spec = Specification.unrestricted();
+
         if (nombre != null && email == null){
-            usuarioList = usuarioRepository.findAllByNombreEqualsIgnoreCase(nombre);
-        }else if (nombre == null && email != null){
-            usuarioList = usuarioRepository.findAllByEmailContainingIgnoreCase(email);
-        }else if(nombre != null && email != null) {
-            usuarioList = usuarioRepository.findAllByEmailContainingIgnoreCaseAndNombreEqualsIgnoreCase(email,nombre);
-        }else {
-            usuarioList=usuarioRepository.findAll();
+            spec = spec.and(UsuarioSpecifications.nombre(nombre));
         }
+        if (nombre == null && email != null) {
+            spec = spec.and(UsuarioSpecifications.email(email));
+        }
+
+        usuarioList=usuarioRepository.findAll(spec);
         return UsuarioMapper.toDtoList(usuarioList);
     }
 
