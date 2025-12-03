@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,9 @@ public class HabitoController {
             @RequestBody HabitoCreateDto habitoCreateDto
             ){
          HabitoDto habitoCreado = habitoService.crearHabito(habitoCreateDto);
-        return ResponseEntity.ok(habitoCreado);
+        return ResponseEntity
+                .created(URI.create("/api/v1/habitos"+ habitoCreado))
+                .body(habitoCreado);
     }
 
     @GetMapping

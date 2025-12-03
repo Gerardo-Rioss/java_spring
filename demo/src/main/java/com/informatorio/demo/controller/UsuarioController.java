@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +17,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @Slf4j
+
+
 public class UsuarioController {
 
     private UsuarioService usuarioService;
@@ -23,7 +27,6 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
     public UsuarioController() {}
 
     @GetMapping
@@ -48,7 +51,9 @@ public class UsuarioController {
             @Valid @RequestBody UsuarioCreateDto usuarioCreateDto
             ){
         UsuarioDto usuarioCreado = usuarioService.crearUsuario(usuarioCreateDto);
-        return ResponseEntity.ok(usuarioCreado);
+        return ResponseEntity
+                .created(URI.create("/api/v1/usuarios"+ usuarioCreado.getId()))
+                .body(usuarioCreado);
     };
 
     @PutMapping("/{id}")

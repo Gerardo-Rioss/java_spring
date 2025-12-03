@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
+
 @RequestMapping("/api/v1/entrada-diaria")
 public class EntradaController {
 
