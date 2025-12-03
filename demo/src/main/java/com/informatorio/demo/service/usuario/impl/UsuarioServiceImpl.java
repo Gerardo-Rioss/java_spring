@@ -28,8 +28,17 @@ public class UsuarioServiceImpl  implements UsuarioService {
     }
 
     @Override
-    public List<UsuarioDto> obtenerTodos() {
-        List<Usuario> usuarioList=usuarioRepository.findAll();
+    public List<UsuarioDto> obtenerTodos(String nombre, String email) {
+        List<Usuario> usuarioList = List.of();
+        if (nombre != null && email == null){
+            usuarioList = usuarioRepository.findAllByNombreEqualsIgnoreCase(nombre);
+        }else if (nombre == null && email != null){
+            usuarioList = usuarioRepository.findAllByEmailContainingIgnoreCase(email);
+        }else if(nombre != null && email != null) {
+            usuarioList = usuarioRepository.findAllByEmailContainingIgnoreCaseAndNombreEqualsIgnoreCase(email,nombre);
+        }else {
+            usuarioList=usuarioRepository.findAll();
+        }
         return UsuarioMapper.toDtoList(usuarioList);
     }
 

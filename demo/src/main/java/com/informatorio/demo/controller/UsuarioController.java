@@ -30,8 +30,11 @@ public class UsuarioController {
     public UsuarioController() {}
 
     @GetMapping
-    public List<UsuarioDto>getUsuarios(){
-        List<UsuarioDto> usuarios = usuarioService.obtenerTodos();
+    public List<UsuarioDto>getUsuarios(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String email
+    ){
+        List<UsuarioDto> usuarios = usuarioService.obtenerTodos(nombre,email);
         return usuarios;
     };
 
