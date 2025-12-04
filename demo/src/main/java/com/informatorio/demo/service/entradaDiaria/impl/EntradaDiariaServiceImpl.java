@@ -2,6 +2,7 @@ package com.informatorio.demo.service.entradaDiaria.impl;
 
 import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaCreateDto;
 import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaDto;
+import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaSimpleDto;
 import com.informatorio.demo.mapper.entradaDiaria.EntradaDiariaMapper;
 import com.informatorio.demo.model.EntradaDiaria;
 import com.informatorio.demo.model.Habito;
@@ -57,12 +58,12 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
         entradaDiaria.setEmocion(createDto.getEmocion());
         EntradaDiaria saved = entradaDiariaRepository.save(entradaDiaria);
         log.info("Usuario generado exitosamente.");
-        return EntradaDiariaMapper.toDto(saved);
+        return EntradaDiariaMapper.toFullDto(saved);
 
     }
 
     @Override
-    public List<EntradaDiariaDto> obtenerEntradasDeUsuario(UUID usuarioId, LocalDate desde, LocalDate hasta) {
+    public List<EntradaDiariaSimpleDto> obtenerEntradasDeUsuario(UUID usuarioId, LocalDate desde, LocalDate hasta) {
 
         Specification<EntradaDiaria> spec = Specification.unrestricted();
 
@@ -88,6 +89,6 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
 
         List<EntradaDiaria> entradas = entradaDiariaRepository.findAll(spec);
 
-        return EntradaDiariaMapper.toDtoList(entradas);
+        return EntradaDiariaMapper.toSimpleDtoList(entradas);
     }
 }

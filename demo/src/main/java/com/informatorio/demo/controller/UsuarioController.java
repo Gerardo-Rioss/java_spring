@@ -1,6 +1,7 @@
 package com.informatorio.demo.controller;
 
 import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaDto;
+import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaSimpleDto;
 import com.informatorio.demo.dto.usuario.UsuarioCreateDto;
 import com.informatorio.demo.dto.usuario.UsuarioDto;
 import com.informatorio.demo.service.entradaDiaria.EntradaDiariaService;
@@ -59,12 +60,12 @@ public class UsuarioController {
     };
 
     @GetMapping("/{usuarioId}/entradas")
-    public ResponseEntity<List<EntradaDiariaDto>> obtenerEntradasDiarias(
+    public ResponseEntity<List<EntradaDiariaSimpleDto>> obtenerEntradasDiarias(
             @PathVariable UUID usuarioId,
             @RequestParam(required = false)LocalDate desde,
             @RequestParam(required = false) LocalDate hasta
             ){
-        List<EntradaDiariaDto> entradas = entradaDiariaService.obtenerEntradasDeUsuario(usuarioId,desde,hasta);
+        List<EntradaDiariaSimpleDto> entradas = entradaDiariaService.obtenerEntradasDeUsuario(usuarioId,desde,hasta);
         return ResponseEntity.ok(entradas);
     };
 
