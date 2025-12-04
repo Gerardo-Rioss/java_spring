@@ -28,8 +28,10 @@ public class UsuarioController {
     private EntradaDiariaService entradaDiariaService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, EntradaDiariaService entradaDiariaService) {
         this.usuarioService = usuarioService;
+        this.entradaDiariaService = entradaDiariaService;
+
     }
     public UsuarioController() {}
 
@@ -56,7 +58,7 @@ public class UsuarioController {
         }
     };
 
-    @GetMapping("/{usuarioId}/entradas-diarias")
+    @GetMapping("/{usuarioId}/entradas")
     public ResponseEntity<List<EntradaDiariaDto>> obtenerEntradasDiarias(
             @PathVariable UUID usuarioId,
             @RequestParam(required = false)LocalDate desde,
