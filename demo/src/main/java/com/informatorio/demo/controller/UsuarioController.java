@@ -25,6 +25,7 @@ import java.util.UUID;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
+    private EntradaDiariaService entradaDiariaService;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
@@ -56,13 +57,13 @@ public class UsuarioController {
     };
 
     @GetMapping("/{usuarioId}/entradas-diarias")
-    public ResponseEntity<EntradaDiariaDto> obtenerEntradasDiarias(
+    public ResponseEntity<List<EntradaDiariaDto>> obtenerEntradasDiarias(
             @PathVariable UUID usuarioId,
             @RequestParam(required = false)LocalDate desde,
             @RequestParam(required = false) LocalDate hasta
             ){
-        List<EntradaDiariaDto> entradas = usuarioService.listarEntradas(usuarioId,desde,hasta);
-        return entradas;
+        List<EntradaDiariaDto> entradas = entradaDiariaService.obtenerEntradasDeUsuario(usuarioId,desde,hasta);
+        return ResponseEntity.ok(entradas);
     };
 
 

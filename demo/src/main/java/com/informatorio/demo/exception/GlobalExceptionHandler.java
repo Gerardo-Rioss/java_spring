@@ -17,6 +17,7 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
+
     public ResponseEntity<ApiError> hanledMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request){
         Map<String,String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach((fieldError)->{
@@ -36,5 +37,4 @@ public class GlobalExceptionHandler {
         log.warn("Error de validacion en {}:{}", request.getRequestURI(),errors);
         return ResponseEntity.badRequest().body(apiError);
     }
-
 }

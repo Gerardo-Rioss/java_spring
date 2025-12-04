@@ -29,5 +29,6 @@ public class EntradaDiariaCreateDto {
     @NotBlank(message = "La emoción no puede estar vacia.")
     @Size(max = 100, message = "La emoción no puede superar los 100 caracteres.")
     private String emocion;
+
     private List<Long> habitosIds;
 }

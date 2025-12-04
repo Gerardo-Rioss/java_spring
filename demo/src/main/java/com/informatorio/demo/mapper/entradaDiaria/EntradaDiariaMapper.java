@@ -4,6 +4,8 @@ import com.informatorio.demo.dto.entradaDiaria.EntradaDiariaDto;
 import com.informatorio.demo.mapper.usuario.UsuarioMapper;
 import com.informatorio.demo.model.EntradaDiaria;
 
+import java.util.List;
+
 public final class EntradaDiariaMapper {
     public EntradaDiariaMapper(){}
 
@@ -23,5 +25,11 @@ public final class EntradaDiariaMapper {
             );
         }
         return dto;
+    }
+
+    public static List<EntradaDiariaDto> toDtoList(List<EntradaDiaria> entradas){
+        return entradas.stream()
+                .map(entradaDiaria -> toDto(entradaDiaria))
+                .toList();
     }
 }

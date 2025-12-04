@@ -7,13 +7,17 @@ import com.informatorio.demo.model.EntradaDiaria;
 import com.informatorio.demo.model.Habito;
 import com.informatorio.demo.model.Usuario;
 import com.informatorio.demo.repository.entradaDiaria.EntradaDiariaRepository;
+import com.informatorio.demo.repository.entradaDiaria.specification.EntradaDiariaSpecification;
 import com.informatorio.demo.repository.habito.HabitoRepository;
 import com.informatorio.demo.repository.usuario.UsuarioRepository;
 import com.informatorio.demo.service.entradaDiaria.EntradaDiariaService;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,5 +59,35 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
         log.info("Usuario generado exitosamente.");
         return EntradaDiariaMapper.toDto(saved);
 
+    }
+
+    @Override
+    public List<EntradaDiariaDto> obtenerEntradasDeUsuario(UUID usuarioId, LocalDate desde, LocalDate hasta) {
+
+        Specification<EntradaDiaria> spec = Specification.unrestricted();
+
+        //Busco si existen entradas con la id de usurio ingresada
+        log.info("Buscando entradas diarias del usuario {}", usuarioId);
+        if (!usuarioRepository.existsById(usuarioId)){
+            log.error("Usuario no encontrado con id {} "+ usuarioId);
+            throw new ValidationException("Usuario no encontrado con id {} "+usuarioId);
+        }
+
+        //Hago la consulta de las entradsa por id de usuario
+        spec = spec.and(EntradaDiariaSpecification.porUsuarioId(usuarioId));
+
+        if (desde!= null) {
+            spec= spec.and(EntradaDiariaSpecification.fechaDesde(desde));
+            log.info("Buscando entradas desde la fecha {}", desde);
+        }
+
+        if (hasta!= null) {
+            spec= spec.and(EntradaDiariaSpecification.fechaHasta(hasta));
+            log.info("Buscando entradas hasta la fecha {}", hasta);
+        }
+
+        List<EntradaDiaria> entradas = entradaDiariaRepository.findAll(spec);
+
+        return EntradaDiariaMapper.toDtoList(entradas);
     }
 }

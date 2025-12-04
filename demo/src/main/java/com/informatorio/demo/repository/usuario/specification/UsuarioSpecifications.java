@@ -10,7 +10,8 @@ public final class UsuarioSpecifications {
 
     public static Specification<Usuario> nombre(final String nombre) {
         return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(criteriaBuilder.lower( root.get("nombre")), "%" + nombre.toLowerCase() + "%"
+                criteriaBuilder.like(criteriaBuilder.lower( root.get("nombre")),
+                        "%" + nombre.toLowerCase() + "%"
                 ));
     }
 
