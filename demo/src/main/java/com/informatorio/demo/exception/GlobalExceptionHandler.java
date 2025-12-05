@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,10 +18,7 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Manejador global de excepciones para la aplicación.
- * Intercepta y transforma excepciones específicas en respuestas HTTP con el formato ApiError.
- */
+
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -141,4 +139,36 @@ public class GlobalExceptionHandler {
         // Es mejor usar 'ResponseEntity.status(HttpStatus.NOT_FOUND)' para mayor claridad
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
+
+    // ---------------------------------------------------------------------
+    // 5- Captura errores cuando la URL NO coincide con ningún endpoint real.
+    //    Ejemplo:
+    //       - /api/v1/usuarios//entradas
+    //       - /api/v1/cualquier-cosa-que-no-exista
+    //
+    //    Importante:
+    //    Para que entre acá, deben estar activadas estas propiedades:
+    //       spring.mvc.throw-exception-if-no-handler-found=true
+    //       spring.web.resources.add-mappings=false
+    //
+    //    Sin eso, Spring devuelve un 404 por su cuenta y NO entra al handler.
+    // ---------------------------------------------------------------------
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ApiError> handleNoHandlerFound(NoHandlerFoundException ex,
+                                                         HttpServletRequest request) {
+
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error("Endpoint no encontrado")
+                .message("La ruta solicitada no existe: " + request.getRequestURI())
+                .path(request.getRequestURI())
+                .build();
+
+        log.warn("Ruta no encontrada: {}", request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+
 }
