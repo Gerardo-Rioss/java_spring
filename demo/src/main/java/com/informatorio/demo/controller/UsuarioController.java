@@ -9,6 +9,7 @@ import com.informatorio.demo.service.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,8 +63,8 @@ public class UsuarioController {
     @GetMapping("/{usuarioId}/entradas")
     public ResponseEntity<List<EntradaDiariaSimpleDto>> obtenerEntradasDiarias(
             @PathVariable UUID usuarioId,
-            @RequestParam(required = false)LocalDate desde,
-            @RequestParam(required = false) LocalDate hasta
+            @RequestParam(required = false)  LocalDate desde,
+            @RequestParam(required = false)  LocalDate hasta
             ){
         List<EntradaDiariaSimpleDto> entradas = entradaDiariaService.obtenerEntradasDeUsuario(usuarioId,desde,hasta);
         return ResponseEntity.ok(entradas);
