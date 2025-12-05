@@ -13,8 +13,6 @@ import com.informatorio.demo.repository.entradaDiaria.specification.EntradaDiari
 import com.informatorio.demo.repository.habito.HabitoRepository;
 import com.informatorio.demo.repository.usuario.UsuarioRepository;
 import com.informatorio.demo.service.entradaDiaria.EntradaDiariaService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -68,6 +66,11 @@ public class EntradaDiariaServiceImpl implements EntradaDiariaService {
     public List<EntradaDiariaSimpleDto> obtenerEntradasDeUsuario(UUID usuarioId, LocalDate desde, LocalDate hasta) {
 
         Specification<EntradaDiaria> spec = Specification.unrestricted();
+
+        // Validación del rango de fechas
+        if (desde != null && hasta != null && desde.isAfter(hasta)) {
+            throw new ResourceNotFoundException("La fecha 'desde' no puede ser mayor que la fecha 'hasta'.");
+        }
 
         usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con id " + usuarioId + " no existe"));
