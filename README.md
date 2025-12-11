@@ -1,4 +1,16 @@
-### **`REGISTROS DE LAS MODIFICACIONES - TPI JAVA - INFORMATORIO 2025`**
+## **TRABAJO PRACTICO FINAL JAVA - INFORMATORIO 2025**
+
+### `Endpoint – Listar entradas diarias de un usuario (con filtros simples) :`
+Crear un endpoint para obtener las entradas diarias de un usuario específico, con posibilidad de filtrar por rango de fechas.
+- *Recibir usuarioId como PathVariable (UUID).*
+- *Parámetros opcionales desde y hasta como query params (LocalDate).
+Devolver una lista de EntradaDiariaDTO (o un DTO nuevo más simple si quieren).*
+- *Si el usuario no existe, lanzar una excepción adecuada para que el ControllerAdvice responda bien.*
+- *Agregar logs informando:*
+`Usuario sobre el que se busca.`
+`Rango de fechas utilizado.`
+
+
 
 ## ✅ **DTO de salida**
 
