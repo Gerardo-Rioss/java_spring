@@ -1,6 +1,11 @@
 ## **TRABAJO PRACTICO FINAL JAVA - INFORMATORIO 2025**
 
-### `Endpoint – Listar entradas diarias de un usuario (con filtros simples) :`
+Backend de una app de bienestar personal donde cada usuario puede registrar sus entradas diarias
+(emociones, reflexiones y habitos). Desarrolle un endpoint que permite consultar el historial de un usuario
+filtrando por fechas, con validacion de datos, mensajes de error claros y una arquitectura limpia en capas
+(controlador, servicio, repositorio y DTOs)
+
+### `CONSIGNA: Endpoint – Listar entradas diarias de un usuario (con filtros simples) :`
 Crear un endpoint para obtener las entradas diarias de un usuario específico, con posibilidad de filtrar por rango de fechas.
 - *Recibir usuarioId como PathVariable (UUID).*
 - *Parámetros opcionales desde y hasta como query params (LocalDate).
